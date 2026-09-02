@@ -34,7 +34,7 @@ python -m experiments.name.py
 Marketlab-Analytics/
 ├── experiments/
 ├── data/
-│   └── raw
+│   └── raw/
 │       └── markets.csv
 ├── main.py
 └── README.md

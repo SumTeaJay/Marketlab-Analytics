@@ -23,3 +23,15 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
     df["price"] = return_prices(a, b, Q)
     df.index.name = "market_id"
     return df
+
+def main():
+    parameters = generate_market_parameters(100)
+    df = create_data_frame(parameters[0], parameters[1], parameters[2])
+    df.to_csv(r"data\markets.csv")
+
+    first_array = generate_market_parameters(10, 42)[0]
+    second_array = generate_market_parameters(10, 42)[0]
+    print(first_array == second_array)
+
+if __name__ == "__main__":
+    main()

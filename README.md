@@ -16,6 +16,20 @@ cd C:\Users\example
 git clone https://github.com/SumTeaJay/Marketlab-Analytics.git
 ```
 
+Создайте виртуальное окружение:
+```bash
+python -m venv .venv
+```
+
+Активируйте его в PowerShell:
+```powershell
+.\venv\Scripts\Activate.ps1
+```
+
+Установите зависимости для разработки:
+```bash
+pip install -r requirements.txt
+```
 
 ## Запуск
 Введите следующую команду:
@@ -37,9 +51,11 @@ Marketlab-Analytics/
 │   └── raw/
 │       └── markets.csv
 ├── generate_markets.py
+├── requirements.txt
 └── README.md
 ```
 
 - `experiments/` — скрипты и описание упражнений по дням.
 - `data/raw/markets.csv` — данные о рынках, рассчитанные по формуле P = a - b * Q
 - `generate_markets.py` — основной скрипт генерации рынков.
+- `requirements.txt` — необходимые библиотеки для установки

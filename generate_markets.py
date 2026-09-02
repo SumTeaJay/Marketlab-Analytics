@@ -27,7 +27,7 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
 def main():
     parameters = generate_market_parameters(100)
     df = create_data_frame(parameters[0], parameters[1], parameters[2])
-    df.to_csv(r"data\markets.csv")
+    df.to_csv(r"data\raw\markets.csv")
 
     first_array = generate_market_parameters(10, 42)[0]
     second_array = generate_market_parameters(10, 42)[0]

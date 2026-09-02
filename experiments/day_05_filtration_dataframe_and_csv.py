@@ -9,8 +9,8 @@ df_markets_higher_price = df[df["price"] >= mean_price]
 
 df_markets_higher_price = df_markets_higher_price.sort_values("price")
 
-df_markets_higher_price.to_csv(r"data\markets.csv")
+df_markets_higher_price.to_csv(r"data\raw\markets.csv")
 
-df = pd.read_csv(r"data\markets.csv", index_col="market_id")
+df = pd.read_csv(r"data\raw\markets.csv", index_col="market_id")
 
 print(df)

@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)
@@ -29,9 +30,9 @@ def main():
     df = create_data_frame(parameters[0], parameters[1], parameters[2])
     df.to_csv(r"data\raw\markets.csv")
 
-    first_array = generate_market_parameters(10, 42)[0]
-    second_array = generate_market_parameters(10, 42)[0]
-    print(first_array == second_array)
+    #Гистограмма
+    df["price"].hist(bins=5)
+    plt.show()
 
 if __name__ == "__main__":
     main()

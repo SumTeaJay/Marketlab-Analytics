@@ -36,7 +36,7 @@ Marketlab-Analytics/
 ├── data/
 │   └── raw/
 │       └── markets.csv
-├── main.py
+├── generate_markets.py
 └── README.md
 ```
 

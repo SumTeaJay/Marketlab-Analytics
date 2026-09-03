@@ -28,11 +28,7 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
 def main():
     parameters = generate_market_parameters(100)
     df = create_data_frame(parameters[0], parameters[1], parameters[2])
-    df.to_csv(r"data\raw\markets.csv")
-
-    #Гистограмма
-    df["price"].hist(bins=5)
-    plt.show()
+    df.info()
 
 if __name__ == "__main__":
     main()

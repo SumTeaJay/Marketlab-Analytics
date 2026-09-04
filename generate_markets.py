@@ -2,6 +2,18 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+def validate_markets(df, expected_count):
+    if any(df["price"] < 0):
+        raise ValueError("В таблице присутствует отрицательная цена!")
+
+    if not df.index.is_unique:
+        raise ValueError("В таблице присутствуют несколько одинаковых идентификаторов!")
+
+    if len(df) != expected_count:
+        raise ValueError("В таблице недостаточно строк!")
+
+    return True
+
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)
 
@@ -28,7 +40,11 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
 def main():
     parameters = generate_market_parameters(100)
     df = create_data_frame(parameters[0], parameters[1], parameters[2])
-    df.info()
+    df.to_csv(r"data\raw\markets.csv")
+
+    loaded_df = pd.read_csv(r"data\raw\markets.csv", index_col="market_id")
+
+    print(validate_markets(loaded_df, 100))
 
 if __name__ == "__main__":
     main()

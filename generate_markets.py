@@ -17,7 +17,7 @@ def validate_markets(df, expected_count):
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)
 
-    a = rng.integers(1, 1000, size=count)
+    a = rng.integers(11, 1000, size=count)
     b = rng.integers(1, 10, size=count)
     Q = rng.integers(1, 10, size=count)
 

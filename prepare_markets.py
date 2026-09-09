@@ -18,3 +18,21 @@ def audit_markets(df: pd.DataFrame) -> dict[str, object]:
         output_dict["Число строк, где нарушена формула цены"] = len(df[df["price"] != df["demand_intercept"] - df["demand_slope"] * df["quantity"]])
 
     return output_dict
+
+def load_markets(path: str) -> pd.DataFrame:
+    pass
+
+def clean_markets(df: pd.DataFrame) -> pd.DataFrame:
+    pass
+
+def validate_markets(df: pd.DataFrame, expected_count=None) -> None:
+    pass
+
+def save_markets(df: pd.DataFrame, path: str) -> None:
+    pass
+
+def main():
+    pass
+
+if __name__ == "__main__":
+    main()

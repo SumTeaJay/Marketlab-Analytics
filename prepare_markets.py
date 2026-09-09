@@ -36,7 +36,7 @@ def clean_markets(df: pd.DataFrame) -> pd.DataFrame:
     if clean_df.index.is_unique == False:
         raise ValueError("Существуют данные с одинаковыми идентификаторами!")
 
-    clean_df["price"] = clean_df["deman_intercept"] - clean_df["demand_slope"] * clean_df["quantity"]
+    clean_df["price"] = clean_df["demand_intercept"] - clean_df["demand_slope"] * clean_df["quantity"]
     clean_df = clean_df[clean_df["price"] > 0]
 
     clean_df = clean_df.sort_index()
@@ -62,7 +62,7 @@ def validate_markets(df: pd.DataFrame, expected_count=None) -> None:
     if df.isna().any().any():
         raise ValueError("В таблице остались пропуски")
 
-    if not df["market_id"].is_unique:
+    if not df.index.is_unique:
         raise ValueError("Значения market_id повторяются")
 
     if (df["price"] < 0).any():
@@ -78,7 +78,10 @@ def save_markets(df: pd.DataFrame, path: str) -> None:
     df.to_csv(path)
 
 def main():
-    pass
+    df = load_markets(r"data\raw\markets.csv")
+    df = clean_markets(df)
+    validate_markets(df, expected_count=100)
+    save_markets(df, r"data\processed\markets_clean.csv")
 
 if __name__ == "__main__":
     main()

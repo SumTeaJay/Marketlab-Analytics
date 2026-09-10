@@ -12,12 +12,24 @@ def main():
     # variational_series.to_csv(r"data\reports\quantity_variation.csv")
     # point_estimates.to_csv(r"data\reports\price_estimates.csv")
     # group_units.to_csv(r"data\reports\price_by_slope.csv")
-
+    plt.figure()
     variational_series.plot(x="count", y="quantity", kind="bar")
+    
     plt.xlabel("Q")
     plt.ylabel("Абсолютные частоты")
     plt.title("Вариационный ряд Q")
 
-    plt.show()
+    plt.savefig(r"data\graphs\variational_series_Q.png")
+    plt.close()
+
+    plt.figure()
+    df["price"].hist(bins="auto")
+    
+    plt.xlabel("Цена")
+    plt.ylabel("Частота")
+    plt.title("Гистограмма распределения цены")
+
+    plt.savefig(r"data\graphs\price_histogram.png")
+    plt.close()
 if __name__ == "__main__":
     main()

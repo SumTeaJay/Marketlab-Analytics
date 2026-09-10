@@ -23,7 +23,7 @@ python -m venv .venv
 
 Активируйте его в PowerShell:
 ```powershell
-.\venv\Scripts\Activate.ps1
+.venv\Scripts\Activate.ps1
 ```
 
 Установите зависимости для разработки:
@@ -32,10 +32,20 @@ pip install -r requirements.txt
 ```
 
 ## Запуск
-Введите следующую команду:
+Сначала сгенерируйте данные:
 
 ```bash
-python generate_markets
+python generate_markets.py
+```
+
+Затем очистите их:
+```bash
+python prepare_markets.py
+```
+
+Потом проанализируйте их:
+```bash
+python analyze_markets.py
 ```
 
 **NB!** Если вы запускаете упражнения, перейдите в корень проекта и введите следующую команду:
@@ -46,7 +56,7 @@ python -m experiments.name
 ## Структура
 - `experiments/` — скрипты и описание упражнений по дням.
 - `data/raw/markets.csv` — сырые данные о рынках, рассчитанные по формуле P = a - b * Q
-- `data/processed/markets.csv` — обработанные данные о рынках
+- `data/processed/markets_clean.csv` — обработанные данные о рынках
 - `data/reports` — данные, проанализированные с помощью статистических методов
 - `generate_markets.py` — основной скрипт генерации рынков.
 - `prepare_markets.py` — скрипт очистки данных.

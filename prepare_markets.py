@@ -30,14 +30,14 @@ def clean_markets(df: pd.DataFrame) -> pd.DataFrame:
     for column in numeric_columns:
         clean_df[column] = pd.to_numeric(clean_df[column], errors="coerce")
 
-    clean_df = clean_df.dropna(subset=["demand_intercept", "demand_slope", "quantity", "price"])
+    clean_df = clean_df.dropna(subset=["demand_intercept", "demand_slope", "quantity"])
     clean_df = clean_df.drop_duplicates()
 
     if clean_df.index.is_unique == False:
         raise ValueError("Существуют данные с одинаковыми идентификаторами!")
 
     clean_df["price"] = clean_df["demand_intercept"] - clean_df["demand_slope"] * clean_df["quantity"]
-    clean_df = clean_df[clean_df["price"] > 0]
+    clean_df = clean_df[clean_df["price"] >= 0]
 
     clean_df = clean_df.sort_index()
 

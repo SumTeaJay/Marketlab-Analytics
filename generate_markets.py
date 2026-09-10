@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from prepare_markets import audit_markets
 
 def validate_markets(df, expected_count):
     if any(df["price"] < 0):
@@ -39,8 +38,9 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
     return df
 
 def main():
-    df = pd.read_csv(r"data\raw\markets.csv", index_col="market_id")
-    print(audit_markets(df))
+    parameters = generate_market_parameters(100)
+    df = create_data_frame(parameters[0], parameters[1], parameters[2])
+    df.to_csv(r"data\raw\markets.csv")
 
 if __name__ == "__main__":
     main()

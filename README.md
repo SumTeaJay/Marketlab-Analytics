@@ -35,12 +35,12 @@ pip install -r requirements.txt
 Введите следующую команду:
 
 ```bash
-python generate_markets.py
+python generate_markets
 ```
 
 **NB!** Если вы запускаете упражнения, перейдите в корень проекта и введите следующую команду:
 ```bash
-python -m experiments.name.py
+python -m experiments.name
 ```
 
 ## Структура

@@ -44,18 +44,11 @@ python -m experiments.name.py
 ```
 
 ## Структура
-```text
-Marketlab-Analytics/
-├── experiments/
-├── data/
-│   └── raw/
-│       └── markets.csv
-├── generate_markets.py
-├── requirements.txt
-└── README.md
-```
-
 - `experiments/` — скрипты и описание упражнений по дням.
-- `data/raw/markets.csv` — данные о рынках, рассчитанные по формуле P = a - b * Q
+- `data/raw/markets.csv` — сырые данные о рынках, рассчитанные по формуле P = a - b * Q
+- `data/processed/markets.csv` — обработанные данные о рынках
+- `data/reports` — данные, проанализированные с помощью статистических методов
 - `generate_markets.py` — основной скрипт генерации рынков.
+- `prepare_markets.py` — скрипт очистки данных.
+- `analyze_markets.py` — скрипт анализа данных рынков с помощью статистических задач.
 - `requirements.txt` — необходимые библиотеки для установки

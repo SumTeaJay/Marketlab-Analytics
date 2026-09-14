@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv(r"data\processed\markets_clean.csv", index_col="market_id")
+df = pd.read_csv(r"data\processed\market_price_clean.csv", index_col="market_id")
 
 print(df["quantity"].value_counts(normalize=True))
 print("#" * 32)

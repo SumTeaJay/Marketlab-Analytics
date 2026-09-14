@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from prepare_markets import load_markets
 
 def main():
-    df = load_markets(r"data\processed\markets_clean.csv")
+    df = load_markets(r"data\processed\market_price_clean.csv")
 
     relative_frequencies = df["quantity"].value_counts(normalize=True).sort_index()
     absolute_frequencies = df["quantity"].value_counts(normalize=False).sort_index()

@@ -23,6 +23,12 @@ def generate_market_parameters(count=1, seed=42):
 
     return (a, b, Q)
 
+def generate_market_costs(count=1, seed=42):
+    rng = np.random.default_rng(seed)
+    cost = rng.integers(100, 1000, size=count)
+
+    return cost
+
 def return_prices(a: np.array, b: np.array, Q: np.array) -> np.array:
     P = a - b * Q
     return P[P >= 0]
@@ -38,9 +44,18 @@ def create_data_frame(a: np.array, b: np.array, Q: np.array) -> pd.DataFrame:
     return df
 
 def main():
-    parameters = generate_market_parameters(100)
-    df = create_data_frame(parameters[0], parameters[1], parameters[2])
-    df.to_csv(r"data\raw\markets.csv")
+    # cost = generate_market_costs(100)
+    # df = pd.DataFrame({
+    #     "marginal_costs": cost
+    # }, index = list(range(1, len(cost) + 1)))
+    # df.index.name = "market_id"
+    # df.to_csv(r"data\raw\market_costs.csv")
+
+    prices = pd.read_csv(r"data\processed\markets_price_clean.csv")
+    costs = pd.read_csv(r"data\raw\market_costs.csv")
+
+    result = pd.merge(prices, costs, how="left", validate="one_to_one", indicator=True)
+    print(result.index.is_unique)
 
 if __name__ == "__main__":
     main()

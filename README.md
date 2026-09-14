@@ -55,8 +55,8 @@ python -m experiments.name
 
 ## Структура
 - `experiments/` — скрипты и описание упражнений по дням.
-- `data/raw/markets.csv` — сырые данные о рынках, рассчитанные по формуле P = a - b * Q
-- `data/processed/markets_clean.csv` — обработанные данные о рынках
+- `data/raw/market_price.csv` — сырые данные о рынках, рассчитанные по формуле P = a - b * Q
+- `data/processed/market_price_clean.csv` — обработанные данные о рынках
 - `data/reports` — данные, проанализированные с помощью статистических методов
 - `generate_markets.py` — основной скрипт генерации рынков.
 - `prepare_markets.py` — скрипт очистки данных.

@@ -78,10 +78,10 @@ def save_markets(df: pd.DataFrame, path: str) -> None:
     df.to_csv(path)
 
 def main():
-    df = load_markets(r"data\raw\markets.csv")
+    df = load_markets(r"data\raw\market_price.csv")
     df = clean_markets(df)
     validate_markets(df, expected_count=100)
-    save_markets(df, r"data\processed\markets_clean.csv")
+    save_markets(df, r"data\processed\market_price_clean.csv")
 
 if __name__ == "__main__":
     main()

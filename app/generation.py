@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)
 
-    a = rng.integers(100, 1000, size=count)
+    a = rng.integers(400, 1000, size=count)
     b = rng.integers(1, 10, size=count)
-    cost = rng.integers(100, 1000, size=count)
+    cost = rng.integers(100, 400, size=count)
 
     return (a, b, cost)
 

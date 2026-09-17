@@ -5,7 +5,7 @@
 # 5. Сгенерировать допустимые `a`, `b` и `Q` для 100 рынков.
 
 import numpy as np
-from generate_markets import generate_market_parameters
+from app.generation import generate_market_parameters
 
 rng = np.random.default_rng(67)
 

@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import csv
 
 numeric_columns = ["demand_intercept", "demand_slope", "quantity", "price"]
 
@@ -74,14 +75,25 @@ def validate_markets(df: pd.DataFrame, expected_count=None) -> None:
         raise ValueError("Обнаружена ошибка в формуле цены")
     
 
-def save_markets(df: pd.DataFrame, path: str) -> None:
+def save_data_frame(df: pd.DataFrame, path: str) -> None:
     df.to_csv(path)
 
-def main():
-    df = load_markets(r"data\raw\market_price.csv")
+def prepare_markets() -> None:
+    df = load_markets(r"data\raw\markets_prices_raw.csv")
+
+    audit_results = audit_markets(df)
+    with open(r"data\audit\market_audit_prices.csv", "w", encoding="utf-8", newline="") as audit_csv:
+        writer = csv.DictWriter(audit_csv, fieldnames=[
+                "Число строк", 
+                "Отсутствующие обязательные столбцы", 
+                "Число пропусков по столбцам", 
+                "Число повторяющихся строк",
+                "Число повторяющихся индексов", 
+                "Число отрицательных цен", 
+                "Число строк, где нарушена формула цены"])
+        writer.writeheader()
+        writer.writerow(audit_results)        
+
     df = clean_markets(df)
     validate_markets(df, expected_count=100)
-    save_markets(df, r"data\processed\market_price_clean.csv")
-
-if __name__ == "__main__":
-    main()
+    save_data_frame(df, r"data\processed\market_price_clean.csv")

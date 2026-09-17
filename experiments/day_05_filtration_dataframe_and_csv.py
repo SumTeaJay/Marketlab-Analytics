@@ -1,8 +1,8 @@
-from generate_markets import *
+from app.generation import *
 
 arrays = generate_market_parameters(100)
 
-df = create_data_frame(arrays[0], arrays[1], arrays[2])
+df = create_data_frame_price(arrays[0], arrays[1], arrays[2])
 
 mean_price = np.mean(df["price"])
 df_markets_higher_price = df[df["price"] >= mean_price]

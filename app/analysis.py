@@ -1,9 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from prepare_markets import load_markets
+from app.preparation import load_markets
 
-def main():
-    df = load_markets(r"data\processed\market_price_clean.csv")
+def analyze_markets():
+    df = load_markets(r"data\processed\markets_price_clean.csv")
 
     relative_frequencies = df["quantity"].value_counts(normalize=True).sort_index()
     absolute_frequencies = df["quantity"].value_counts(normalize=False).sort_index()
@@ -44,5 +44,3 @@ def main():
 
     plt.savefig(r"data\graphs\price_histogram.png")
     plt.close()
-if __name__ == "__main__":
-    main()

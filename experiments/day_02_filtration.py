@@ -6,7 +6,7 @@
 # 5. Сравнить один результат с ручным расчётом.
 
 import numpy as np
-from generate_markets import return_prices
+from app.generation import return_prices
 
 prices = np.arange(10, 1000, 50)
 

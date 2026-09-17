@@ -11,8 +11,6 @@
 К спросу относятся:
 - `demand_intercept`
 - `demand_slop`
-- `quantity`
-- `price`
 
 К издержкам относится `marginal_cost`
 
@@ -20,7 +18,6 @@
 Входные данные:
 - `demand_intercept`
 - `demand_slop`
-- `quantity`
 - `marginal_cost`
 
 Вычисляемые данные:

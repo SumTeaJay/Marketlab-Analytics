@@ -48,10 +48,20 @@ def create_pc_data_frame(market_df: pd.DataFrame):
     monopoly_data_frame.index.name = "market_id"
     return monopoly_data_frame
 
-def main():
-    pass
+def validate_monopoly_and_pc(monopoly: pd.DataFrame, pc: pd.DataFrame) -> None:
+    if (monopoly["price"] < pc["price"]).any():
+        raise ValueError("Монопольная цена ниже конкурентной!")
 
-if __name__ == "__main__":
+    if (monopoly["ps"] < 0).any() or (monopoly["cs"] < 0).any() or (pc["ps"] < 0).any() or (pc["cs"] < 0).any():
+        raise ValueError("Есть отрицательный излишек!")
+
+    if (monopoly["sw"] > pc["sw"]).any():
+        raise ValueError("Благосостояние при монополии выше чем при совершенной конкуренции!")
+
+    if (monopoly["dwl"] < 0).any():
+        raise ValueError("Общественные потери отрицательны!")
+
+def calculate_monopoly_and_pc() -> None:
     df = pd.read_csv(r"data\processed\markets_clean.csv", index_col="market_id")
 
     monopoly = create_monopoly_data_frame(df)
@@ -59,3 +69,5 @@ if __name__ == "__main__":
 
     pc = create_pc_data_frame(df)
     pc.to_csv(r"data\calculated_data\perfect_competition.csv")
+
+    validate_monopoly_and_pc(monopoly, pc)

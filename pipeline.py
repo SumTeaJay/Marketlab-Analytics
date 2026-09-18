@@ -1,10 +1,11 @@
 import pandas as pd
-from app import generate_markets, prepare_markets, calculate_monopoly_and_pc
+from app import generate_markets, prepare_markets, calculate_monopoly_and_pc, analyze_markets
 
 def main():
     generate_markets()
     prepare_markets()
     calculate_monopoly_and_pc()
+    analyze_markets()
     
 if __name__ == "__main__":
     main()

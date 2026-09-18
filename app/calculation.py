@@ -52,6 +52,9 @@ def validate_monopoly_and_pc(monopoly: pd.DataFrame, pc: pd.DataFrame) -> None:
     if (monopoly["price"] < pc["price"]).any():
         raise ValueError("Монопольная цена ниже конкурентной!")
 
+    if (monopoly["quantity"] > pc["quantity"]).any():
+        raise ValueError("Монопольный выпуск выше конкурентного!")
+
     if (monopoly["ps"] < 0).any() or (monopoly["cs"] < 0).any() or (pc["ps"] < 0).any() or (pc["cs"] < 0).any():
         raise ValueError("Есть отрицательный излишек!")
 

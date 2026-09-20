@@ -54,7 +54,7 @@ def create_graph_dwl_connection_with_price(monopoly: pd.DataFrame):
 
     plt.title("Связь между равновесным количеством и общественными потерями")
 
-    plt.savefig(r"data\graphs\dwl_connection_with_price.png")
+    plt.savefig(r"data\graphs\dwl_connection_with_quantity.png")
 
 
 def analyze_markets():

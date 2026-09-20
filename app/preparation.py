@@ -2,13 +2,13 @@ import pandas as pd
 import numpy as np
 import csv
 
-numeric_columns = ["demand_intercept", "demand_slope"]
+numeric_columns = ["demand_intercept", "demand_slope", "marginal_costs"]
 
 def audit_markets(df: pd.DataFrame) -> dict[str, object]:
     output_dict = {"Число строк": 0, "Отсутствующие обязательные столбцы": [], "Число пропусков по столбцам": 0, "Число повторяющихся строк": 0, "Число повторяющихся индексов": 0}
     output_dict["Число строк"] = len(df.index)
 
-    required_columns = {"demand_intercept", "demand_slope"}
+    required_columns = {"demand_intercept", "demand_slope", "marginal_costs"}
     missing_columns = required_columns - set(df.columns)
     output_dict["Отсутствующие обязательные столбцы"] = missing_columns
 
@@ -27,7 +27,7 @@ def clean_markets(df: pd.DataFrame) -> pd.DataFrame:
     for column in numeric_columns:
         clean_df[column] = pd.to_numeric(clean_df[column], errors="coerce")
 
-    clean_df = clean_df.dropna(subset=["demand_intercept", "demand_slope"])
+    clean_df = clean_df.dropna(subset=["demand_intercept", "demand_slope", "marginal_costs"])
     clean_df = clean_df.drop_duplicates()
 
     if clean_df.index.is_unique == False:
@@ -41,6 +41,7 @@ def validate_markets(df: pd.DataFrame, expected_count=None) -> None:
     required_columns = {
         "demand_intercept",
         "demand_slope",
+        "marginal_costs"
     }
 
     missing_columns = required_columns - set(df.columns)

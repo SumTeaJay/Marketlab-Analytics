@@ -4,28 +4,31 @@ import numpy as np
 #pc - perfect competition
 
 def calculate_monopoly_price(demand_intercept: np.array, marginal_cost: np.array) -> np.array:
-    return (demand_intercept + marginal_cost) // 2
+    return np.round(((demand_intercept + marginal_cost) / 2), 2)
 
 def calculate_monopoly_quantity(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return (demand_intercept - marginal_cost) // (2 * demand_slope)
+    return np.round((demand_intercept - marginal_cost) / (2 * demand_slope), 2)
 
 def calculate_monopoly_ps(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return ((demand_intercept - marginal_cost) ** 2) // (4 * demand_slope)
+    return np.round(((demand_intercept - marginal_cost) ** 2) / (4 * demand_slope), 2)
 
 def calculate_monopoly_cs(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return ((demand_intercept - marginal_cost) ** 2) // (8 * demand_slope)
+    return np.round(((demand_intercept - marginal_cost) ** 2) / (8 * demand_slope), 2)
 
 def calculate_monopoly_dwl(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return ((demand_intercept - marginal_cost) ** 2) // (8 * demand_slope)
+    return np.round(((demand_intercept - marginal_cost) ** 2) / (8 * demand_slope), 2)
 
 def calculate_pc_quantity(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return (demand_intercept - marginal_cost) // demand_slope
+    return np.round((demand_intercept - marginal_cost) / demand_slope, 2)
 
 def calculate_pc_cs(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return ((demand_intercept - marginal_cost) ** 2) // (2 * demand_slope)
+    return np.round(((demand_intercept - marginal_cost) ** 2) / (2 * demand_slope), 2)
 
 def create_monopoly_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
     monopoly_data_frame = pd.DataFrame({
+        "demand_intercept": market_df["demand_intercept"],
+        "demand_slope": market_df["demand_slope"],
+        "marginal_costs": market_df["marginal_costs"],
         "price": calculate_monopoly_price(market_df["demand_intercept"], market_df["marginal_costs"]),
         "quantity": calculate_monopoly_quantity(market_df["demand_intercept"], market_df["demand_slope"], market_df["marginal_costs"]),
         "ps": calculate_monopoly_ps(market_df["demand_intercept"], market_df["demand_slope"], market_df["marginal_costs"]),
@@ -38,6 +41,9 @@ def create_monopoly_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
 
 def create_pc_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
     monopoly_data_frame = pd.DataFrame({
+        "demand_intercept": market_df["demand_intercept"],
+        "demand_slope": market_df["demand_slope"],
+        "marginal_costs": market_df["marginal_costs"],
         "price": market_df["marginal_costs"],
         "quantity": calculate_pc_quantity(market_df["demand_intercept"], market_df["demand_slope"], market_df["marginal_costs"]),
         "ps": 0,

@@ -32,21 +32,12 @@ pip install -r requirements.txt
 ```
 
 ## Запуск
-Сначала сгенерируйте данные:
+Запустите процесс анализа:
 
 ```bash
-python generate_markets.py
+python pipeline.py
 ```
 
-Затем очистите их:
-```bash
-python prepare_markets.py
-```
-
-Потом проанализируйте их:
-```bash
-python analyze_markets.py
-```
 
 **NB!** Если вы запускаете упражнения, перейдите в корень проекта и введите следующую команду:
 ```bash
@@ -55,10 +46,13 @@ python -m experiments.name
 
 ## Структура
 - `experiments/` — скрипты и описание упражнений по дням.
-- `data/raw/market_price.csv` — сырые данные о рынках, рассчитанные по формуле P = a - b * Q
-- `data/processed/market_price_clean.csv` — обработанные данные о рынках
-- `data/reports` — данные, проанализированные с помощью статистических методов
-- `generate_markets.py` — основной скрипт генерации рынков.
-- `prepare_markets.py` — скрипт очистки данных.
-- `analyze_markets.py` — скрипт анализа данных рынков с помощью статистических задач.
+- `data/raw/` — сгенерированные данные о рынках
+- `data/processed/` — обработанные данные о рынках
+- `data/audit/` — найденные ошибки в данных
+- `data/calculated_data/` — модели рынков и их параметры
+- `data/graphs/` — графики
+- `pipeline.py` — основной скрипт, запускающий анализ
+- `app\` — скрипты-этапы анализа
+- `documentation\` — документы для работы
+- `notes\` — общие впечатления от работы на неделе
 - `requirements.txt` — необходимые библиотеки для установки

@@ -37,7 +37,7 @@ def clean_markets(df: pd.DataFrame) -> pd.DataFrame:
 
     return clean_df
 
-def validate_markets(df: pd.DataFrame, expected_count=None) -> None:
+def validate_generated_markets(df: pd.DataFrame, expected_count=None) -> None:
     required_columns = {
         "demand_intercept",
         "demand_slope",
@@ -80,5 +80,5 @@ def prepare_markets() -> None:
         writer.writerow(audit_results)        
 
     markets = clean_markets(markets)
-    validate_markets(markets, expected_count=100)
+    validate_generated_markets(markets, expected_count=100)
     save_data_frame(markets, r"data\processed\markets_clean.csv")

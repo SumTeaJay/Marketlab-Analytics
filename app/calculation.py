@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from app.validation import check_monopoly_and_pc
+from app.validation import check_monopoly_and_pc, validate_monopoly_and_pc
 
 #pc - perfect competition
 
@@ -23,7 +23,7 @@ def calculate_pc_quantity(demand_intercept: np.array, demand_slope: np.array, ma
     return (demand_intercept - marginal_cost) / demand_slope
 
 def calculate_pc_cs(demand_intercept: np.array, demand_slope: np.array, marginal_cost: np.array) -> np.array:
-    return np.round((demand_intercept - marginal_cost) ** 2) / (2 * demand_slope)
+    return ((demand_intercept - marginal_cost) ** 2) / (2 * demand_slope)
 
 def create_monopoly_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
     cs = calculate_monopoly_cs(market_df["demand_intercept"], market_df["demand_slope"], market_df["marginal_costs"])
@@ -56,28 +56,6 @@ def create_pc_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
     })
     monopoly_data_frame.index.name = "market_id"
     return monopoly_data_frame
-
-def validate_monopoly_and_pc(monopoly: pd.DataFrame, pc: pd.DataFrame) -> None:
-    if (monopoly["price"] < pc["price"]).any():
-        raise ValueError("Монопольная цена ниже конкурентной!")
-
-    if (monopoly["quantity"] > pc["quantity"]).any():
-        raise ValueError("Монопольный выпуск выше конкурентного!")
-
-    if (monopoly["ps"] < 0).any() or (monopoly["cs"] < 0).any() or (pc["ps"] < 0).any() or (pc["cs"] < 0).any():
-        raise ValueError("Есть отрицательный излишек!")
-
-    if (monopoly["sw"] > pc["sw"]).any():
-        raise ValueError("Благосостояние при монополии выше чем при совершенной конкуренции!")
-
-    if (monopoly["dwl"] < 0).any():
-        raise ValueError("Общественные потери отрицательны!")
-    
-    if (monopoly["quantity"] < 0).any() or (pc["quantity"] < 0).any():
-        raise ValueError("Равновесное количество отрицательно!")
-
-    if (monopoly["price"] < 0).any() or (pc["price"] < 0).any():
-        raise ValueError("Цена отрицательна!")
 
 def calculate_monopoly_and_pc() -> None:
     initial_dataframe = pd.read_csv(r"data\processed\markets_clean.csv", index_col="market_id")

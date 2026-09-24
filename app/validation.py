@@ -1,6 +1,28 @@
 import pandas as pd
 import numpy as np
 
+def validate_monopoly_and_pc(monopoly: pd.DataFrame, pc: pd.DataFrame) -> None:
+    if (monopoly["price"] < pc["price"]).any():
+        raise ValueError("Монопольная цена ниже конкурентной!")
+
+    if (monopoly["quantity"] > pc["quantity"]).any():
+        raise ValueError("Монопольный выпуск выше конкурентного!")
+
+    if (monopoly["ps"] < 0).any() or (monopoly["cs"] < 0).any() or (pc["ps"] < 0).any() or (pc["cs"] < 0).any():
+        raise ValueError("Есть отрицательный излишек!")
+
+    if (monopoly["sw"] > pc["sw"]).any():
+        raise ValueError("Благосостояние при монополии выше чем при совершенной конкуренции!")
+
+    if (monopoly["dwl"] < 0).any():
+        raise ValueError("Общественные потери отрицательны!")
+    
+    if (monopoly["quantity"] < 0).any() or (pc["quantity"] < 0).any():
+        raise ValueError("Равновесное количество отрицательно!")
+
+    if (monopoly["price"] < 0).any() or (pc["price"] < 0).any():
+        raise ValueError("Цена отрицательна!")
+
 def validate_market_id(pc: pd.DataFrame, monopoly: pd.DataFrame, initial_dataframe: pd.DataFrame) -> bool:
     return (pc.index == monopoly.index).all() and ((monopoly.index == initial_dataframe.index)).all() and ((pc.index == initial_dataframe.index)).all()
 

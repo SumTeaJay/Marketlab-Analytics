@@ -3,6 +3,21 @@ import matplotlib.pyplot as plt
 
 #pc - perfect competition
 
+def create_united_df(pc: pd.DataFrame, monopoly: pd.DataFrame) -> pd.DataFrame:
+    pc["regime"] = "Совершенная конкуренция"
+    monopoly["regime"] = "Монополия"
+
+    column = pc.pop('regime')
+    pc.insert(0, 'regime', column)
+
+    column = monopoly.pop('regime')
+    monopoly.insert(1, 'regime', column)
+
+    new_united_df = pd.concat([pc, monopoly])
+    new_united_df = new_united_df.sort_values(by=["market_id", "regime"])
+    new_united_df["difference_between_a_and_MC"] = new_united_df["demand_intercept"] - new_united_df["marginal_costs"]
+    return new_united_df
+
 def compare_prices(monopoly: pd.DataFrame, pc: pd.DataFrame):
     mean_difference = (monopoly["price"] - pc["price"]).mean()
     median_difference = (monopoly["price"] - pc["price"]).median()
@@ -56,52 +71,48 @@ def create_graph_dwl_connection_with_price(monopoly: pd.DataFrame):
 
     plt.savefig(r"data\graphs\dwl_connection_with_quantity.png")
 
+def create_report_1(pc: pd.DataFrame, monopoly: pd.DataFrame):
+    with open(r"data\reports\report_1.txt", "w", encoding="utf-8") as report_file:
+        print("- Данные для вопроса №1\n'Насколько в среднем и по медиане меняются цена и выпуск?'", file=report_file)
+        price_differences = compare_prices(monopoly, pc)
+        quantity_differences = compare_quantity(monopoly, pc)
+
+        print(f"Средняя разница между равновесными ценами монополии и совершенной конкуренции: {price_differences[0]}", file=report_file)
+        print(f"Медианная разница между равновесными ценами монополии и совершенной конкуренции: {price_differences[1]}", file=report_file)
+
+        print(f"Средняя разница между равновесным количеством на рынке монополии и совершенной конкуренции: {quantity_differences[0]}", file=report_file)
+        print(f"Медианная разница между равновесным количеством на рынке монополии и совершенной конкуренции: {quantity_differences[1]}", file=report_file)
+        print(file=report_file)
+
+        print("- Данные для вопроса №2\n'Как перераспределяется благосостояние между потребителем и производителем?'", file=report_file)
+
+        monopoly_surpluses = return_monopoly_surpluses(monopoly)
+        pc_surpluses = return_pc_surpluses(pc)
+
+        print(f"Средний излишек производителя в монополии: {monopoly_surpluses[0]}", file=report_file)
+        print(f"Средний излишек потребителя в монополии: {monopoly_surpluses[1]}", file=report_file)
+
+        print(f"Средний излишек производителя в совершенной конкуренции: {pc_surpluses[0]}", file=report_file)
+        print(f"Средний излишек потребителя в совершенной конкуренции: {pc_surpluses[1]}", file=report_file)
+        print(file=report_file)
+        
+        print("- Данные для вопроса №3\n'3. Какова средняя и медианная величина общественных потерь?'", file=report_file)
+
+        dwl = return_monopoly_dwl(monopoly)
+
+        print("Общественные потери при совершенной конкуренции равны нулю", file=report_file)
+        print(f"Средние общественные потери при монополии: {dwl[0]}", file=report_file)
+        print(f"Медианные общественные потери при монополии: {dwl[1]}", file=report_file)
+
+def create_report_2(pc: pd.DataFrame, monopoly: pd.DataFrame):
+    pass
 
 def analyze_markets():
     monopoly = pd.read_csv(r"data\calculated_data\monopoly.csv", index_col="market_id")
     pc = pd.read_csv(r"data\calculated_data\perfect_competition.csv", index_col="market_id")
-    print("- Данные для вопроса №1")
-    price_differences = compare_prices(monopoly, pc)
-    quantity_differences = compare_quantity(monopoly, pc)
+    print(create_united_df(monopoly, pc))
 
-    print(f"Средняя разница между равновесными ценами монополии и совершенной конкуренции: {price_differences[0]}")
-    print(f"Медианная разница между равновесными ценами монополии и совершенной конкуренции: {price_differences[1]}")
-
-    print(f"Средняя разница между равновесным количеством на рынке монополии и совершенной конкуренции: {quantity_differences[0]}")
-    print(f"Медианная разница между равновесным количеством на рынке монополии и совершенной конкуренции: {quantity_differences[1]}")
-    print()
-
-    print("- Данные для вопроса №2")
-
-    monopoly_surpluses = return_monopoly_surpluses(monopoly)
-    pc_surpluses = return_pc_surpluses(pc)
-
-    print(f"Средний излишек производителя в монополии: {monopoly_surpluses[0]}")
-    print(f"Средний излишек потребителя в монополии: {monopoly_surpluses[1]}")
-
-    print(f"Средний излишек производителя в совершенной конкуренции: {pc_surpluses[0]}")
-    print(f"Средний излишек потребителя в совершенной конкуренции: {pc_surpluses[1]}")
-    print()
-    
-    print("- Данные для вопроса №3")
-
-    dwl = return_monopoly_dwl(monopoly)
-
-    print("Общественные потери при совершенной конкуренции равны нулю")
-    print(f"Средние общественные потери при монополии: {dwl[0]}")
-    print(f"Медианные общественные потери при монополии: {dwl[1]}")
-    print()
-
-    print("- Данные для вопроса №4 и №5")
-
-    print("Топ-10 рынков с наибольшими общественными потерями:")
-    print(return_markets_with_biggest_dwl(monopoly, inverted=False))
-
-    print()
-
-    print("Топ-10 рынков-монополий с наименьшими общественными потерями:")
-    print(return_markets_with_biggest_dwl(monopoly, inverted=True))
-    create_graph_price_difference(monopoly, pc)
-    create_graph_dwl_connection_with_price(monopoly)
+    create_report_1(pc, monopoly)
+    create_report_2(pc, monopoly)
 
 

@@ -11,7 +11,7 @@ def create_united_df(pc: pd.DataFrame, monopoly: pd.DataFrame) -> pd.DataFrame:
     pc.insert(0, 'regime', column)
 
     column = monopoly.pop('regime')
-    monopoly.insert(1, 'regime', column)
+    monopoly.insert(0, 'regime', column)
 
     new_united_df = pd.concat([pc, monopoly])
     new_united_df = new_united_df.sort_values(by=["market_id", "regime"])

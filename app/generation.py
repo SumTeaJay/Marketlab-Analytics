@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+from app.initialisation import create_data_dirs
+
+RAW_DIR = create_data_dirs("raw")
 
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)
@@ -31,5 +33,5 @@ def generate_markets() -> None:
     df_prices = create_data_frame_price(price_parameters[0], price_parameters[1])
     df_costs = create_data_frame_costs(price_parameters[2])
 
-    df_prices.to_csv(r"data\raw\markets_prices_raw.csv")
-    df_costs.to_csv(r"data\raw\markets_costs_raw.csv")
+    df_prices.to_csv(RAW_DIR / "markets_prices_raw.csv")
+    df_costs.to_csv(RAW_DIR / "markets_costs_raw.csv")

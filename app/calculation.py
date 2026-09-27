@@ -1,6 +1,10 @@
 import pandas as pd
 import numpy as np
 from app.validation import check_monopoly_and_pc, validate_monopoly_and_pc
+from app.initialisation import create_data_dirs
+
+PROCESSED_DIR = create_data_dirs("processed")
+CALCULATED_DIR = create_data_dirs("calculated")
 
 #pc - perfect competition
 
@@ -58,13 +62,13 @@ def create_pc_data_frame(market_df: pd.DataFrame) -> pd.DataFrame:
     return monopoly_data_frame
 
 def calculate_monopoly_and_pc() -> None:
-    initial_dataframe = pd.read_csv(r"data\processed\markets_clean.csv", index_col="market_id")
+    initial_dataframe = pd.read_csv(PROCESSED_DIR / "markets_clean.csv", index_col="market_id")
 
     monopoly = create_monopoly_data_frame(initial_dataframe)
-    monopoly.to_csv(r"data\calculated_data\monopoly.csv")
+    monopoly.to_csv(CALCULATED_DIR / "monopoly.csv")
 
     pc = create_pc_data_frame(initial_dataframe)
-    pc.to_csv(r"data\calculated_data\perfect_competition.csv")
+    pc.to_csv(CALCULATED_DIR / "perfect_competition.csv")
 
     validate_monopoly_and_pc(monopoly, pc)
     check_monopoly_and_pc(monopoly, pc, initial_dataframe)

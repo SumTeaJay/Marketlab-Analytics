@@ -1,6 +1,11 @@
 import pandas as pd
 import numpy as np
 import csv
+from app.initialisation import create_data_dirs
+
+RAW_DIR = create_data_dirs("raw")
+AUDIT_DIR = create_data_dirs("audit")
+PROCESSED_DIR = create_data_dirs("processed")
 
 numeric_columns = ["demand_intercept", "demand_slope", "marginal_costs"]
 
@@ -63,13 +68,13 @@ def save_data_frame(df: pd.DataFrame, path: str) -> None:
     df.to_csv(path)
 
 def prepare_markets() -> None:
-    df_prices = load_markets(r"data\raw\markets_prices_raw.csv")
-    df_costs = load_markets(r"data\raw\markets_costs_raw.csv")
+    df_prices = load_markets(RAW_DIR / "markets_prices_raw.csv")
+    df_costs = load_markets(RAW_DIR / "markets_costs_raw.csv")
 
     markets = pd.merge(df_prices, df_costs, how="left", validate="one_to_one", on="market_id")
     audit_results = audit_markets(markets)
 
-    with open(r"data\audit\markets_audit.csv", "w", encoding="utf-8", newline="") as audit_csv:
+    with open(AUDIT_DIR / "markets_audit.csv", "w", encoding="utf-8", newline="") as audit_csv:
         writer = csv.DictWriter(audit_csv, fieldnames=[
                 "Число строк", 
                 "Отсутствующие обязательные столбцы", 
@@ -81,4 +86,4 @@ def prepare_markets() -> None:
 
     markets = clean_markets(markets)
     validate_generated_markets(markets, expected_count=100)
-    save_data_frame(markets, r"data\processed\markets_clean.csv")
+    save_data_frame(markets, PROCESSED_DIR / "markets_clean.csv")

@@ -1,5 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from app.initialisation import create_data_dirs
+
+GRAPHS_DIR = create_data_dirs("graphs")
+REPORTS_DIR = create_data_dirs("reports")
+CALCULATED_DIR = create_data_dirs("calculated")
 
 #pc - perfect competition
 
@@ -43,7 +48,7 @@ def create_graph_price_difference(monopoly: pd.DataFrame, pc: pd.DataFrame):
 
     plt.ylabel("Количество рынков")
 
-    plt.savefig(r"data\graphs\price_difference.png")    
+    plt.savefig(GRAPHS_DIR / "price_difference.png")    
 
 def create_graph_dwl_connection_with_quantity(monopoly: pd.DataFrame):
     plt.scatter(
@@ -56,10 +61,10 @@ def create_graph_dwl_connection_with_quantity(monopoly: pd.DataFrame):
 
     plt.title("Связь между равновесным количеством и общественными потерями")
 
-    plt.savefig(r"data\graphs\dwl_connection_with_quantity.png")
+    plt.savefig(GRAPHS_DIR / "dwl_connection_with_quantity.png")
 
 def create_report_1(pc: pd.DataFrame, monopoly: pd.DataFrame):
-    with open(r"data\reports\report_1.txt", "w", encoding="utf-8") as report_file:
+    with open(REPORTS_DIR / "report_1.txt", "w", encoding="utf-8") as report_file:
         print("- Данные для вопроса №1\n'Насколько в среднем и по медиане меняются цена и выпуск?'", file=report_file)
         price_differences = compare_prices(monopoly, pc)
         quantity_differences = compare_quantity(monopoly, pc)
@@ -91,6 +96,8 @@ def create_report_1(pc: pd.DataFrame, monopoly: pd.DataFrame):
         print(f"Средние общественные потери при монополии: {dwl[0]}", file=report_file)
         print(f"Медианные общественные потери при монополии: {dwl[1]}", file=report_file)
 
+    create_graph_price_difference(monopoly, pc)
+    create_graph_dwl_connection_with_quantity(monopoly)
 
 ### Все функции под этим комментарием до create_report_2 относятся к отчету №2
 def create_united_df(pc: pd.DataFrame, monopoly: pd.DataFrame) -> pd.DataFrame:
@@ -128,20 +135,20 @@ def create_graph_dwl_connection_with_a(dataframe: pd.DataFrame):
 
     plt.title("Связь между максимальной ценой потребителя\n и общественными потерями")
 
-    plt.savefig(r"data\graphs\dwl_connection_with_a.png")
+    plt.savefig(GRAPHS_DIR / "dwl_connection_with_a.png")
 
 
 def create_report_2(united_dataframe: pd.DataFrame):
     united_dataframe.groupby(by="demand_slope")
     summary = groupby_b_and_analyze_dwl(united_dataframe)
     united_dataframe = add_mean_dwl(united_dataframe)
-    united_dataframe.to_csv(r"data\reports\report_2_analytical_dataframe.csv")
-    summary.to_csv(r"data\reports\report_2_summary.csv")
+    united_dataframe.to_csv(REPORTS_DIR / "report_2_analytical_dataframe.csv")
+    summary.to_csv(REPORTS_DIR / "report_2_summary.csv")
     create_graph_dwl_connection_with_a(united_dataframe)
 
 def analyze_markets():
-    monopoly = pd.read_csv(r"data\calculated_data\monopoly.csv", index_col="market_id")
-    pc = pd.read_csv(r"data\calculated_data\perfect_competition.csv", index_col="market_id")
+    monopoly = pd.read_csv(CALCULATED_DIR / "monopoly.csv", index_col="market_id")
+    pc = pd.read_csv(CALCULATED_DIR / "perfect_competition.csv", index_col="market_id")
     united_df = create_united_df(pc, monopoly)
     create_report_1(pc, monopoly)
     create_report_2(united_df)

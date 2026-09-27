@@ -36,7 +36,7 @@ def validate_market_quantity(pc: pd.DataFrame, monopoly: pd.DataFrame):
     return (pc["quantity"] == 2 * monopoly["quantity"]).all()
 
 def validate_sw(pc: pd.DataFrame, monopoly: pd.DataFrame):
-    return np.allclose(monopoly["sw"] + monopoly["dwl"], pc["sw"], 2)
+    return np.allclose(monopoly["sw"] + monopoly["dwl"], pc["sw"])
 
 def validate_values(pc: pd.DataFrame, monopoly: pd.DataFrame):
     if pc.isna().any().any() == True:

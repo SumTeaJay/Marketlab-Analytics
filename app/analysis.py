@@ -84,7 +84,7 @@ def create_report_1(pc: pd.DataFrame, monopoly: pd.DataFrame):
         print(f"Средний излишек потребителя в совершенной конкуренции: {pc_surpluses[1]}", file=report_file)
         print(file=report_file)
         
-        print("- Данные для вопроса №3\n'3. Какова средняя и медианная величина общественных потерь?'", file=report_file)
+        print("- Данные для вопроса №3\nКакова средняя и медианная величина общественных потерь?'", file=report_file)
 
         dwl = return_monopoly_dwl(monopoly)
 

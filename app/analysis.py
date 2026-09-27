@@ -113,7 +113,7 @@ def create_united_df(pc: pd.DataFrame, monopoly: pd.DataFrame) -> pd.DataFrame:
 
 def groupby_b_and_analyze_dwl(united_dataframe: pd.DataFrame):
     united_dataframe = united_dataframe.groupby(by="demand_slope")
-    summary = united_dataframe.agg(count_of_markets = ("regime", "count"), mean_dwl = ("dwl", "mean"), median_dwl = ("dwl", "median"), mean_difference_between_a_and_MC = ("difference_between_a_and_MC", "mean"), min_dwl = ("dwl", "min"), max_dwl = ("dwl", "max"))
+    summary = united_dataframe.agg(count_of_markets = ("regime", "count"), mean_dwl_according_to_two_modes = ("dwl", "mean"), median_dwl_according_to_two_modes = ("dwl", "median"), mean_difference_between_a_and_MC_according_to_two_modes = ("difference_between_a_and_MC", "mean"), min_dwl_according_to_two_modes = ("dwl", "min"), max_dwl_according_to_two_modes = ("dwl", "max"))
     return summary
 
 def add_mean_dwl(united_dataframe: pd.DataFrame) -> pd.DataFrame:

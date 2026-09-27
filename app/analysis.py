@@ -58,19 +58,6 @@ def create_graph_dwl_connection_with_quantity(monopoly: pd.DataFrame):
 
     plt.savefig(r"data\graphs\dwl_connection_with_quantity.png")
 
-def create_graph_dwl_connection_with_ps(dataframe: pd.DataFrame):
-    plt.scatter(
-        dataframe["ps"],
-        dataframe["dwl"]
-    )
-
-    plt.xlabel("Излишек производителя")
-    plt.ylabel("Общественные потери")
-
-    plt.title("Связь между излишком производителя и общественными потерями")
-
-    plt.savefig(r"data\graphs\dwl_connection_with_ps.png")
-
 def create_report_1(pc: pd.DataFrame, monopoly: pd.DataFrame):
     with open(r"data\reports\report_1.txt", "w", encoding="utf-8") as report_file:
         print("- Данные для вопроса №1\n'Насколько в среднем и по медиане меняются цена и выпуск?'", file=report_file)
@@ -130,6 +117,19 @@ def add_mean_dwl(united_dataframe: pd.DataFrame) -> pd.DataFrame:
     united_dataframe["mean_dwl"] = united_dataframe.groupby("demand_slope")["dwl"].transform("mean")
     return united_dataframe
 
+def create_graph_dwl_connection_with_a(dataframe: pd.DataFrame):
+    plt.scatter(
+        dataframe["demand_intercept"],
+        dataframe["dwl"]
+    )
+
+    plt.xlabel("Максимальная цена, которую готов заплатить потребитель")
+    plt.ylabel("Общественные потери")
+
+    plt.title("Связь между максимальной ценой потребителя\n и общественными потерями")
+
+    plt.savefig(r"data\graphs\dwl_connection_with_a.png")
+
 
 def create_report_2(united_dataframe: pd.DataFrame):
     united_dataframe.groupby(by="demand_slope")
@@ -137,13 +137,13 @@ def create_report_2(united_dataframe: pd.DataFrame):
     united_dataframe = add_mean_dwl(united_dataframe)
     united_dataframe.to_csv(r"data\reports\report_2_analytical_dataframe.csv")
     summary.to_csv(r"data\reports\report_2_summary.csv")
-    create_graph_dwl_connection_with_ps(united_dataframe)
+    create_graph_dwl_connection_with_a(united_dataframe)
 
 def analyze_markets():
     monopoly = pd.read_csv(r"data\calculated_data\monopoly.csv", index_col="market_id")
     pc = pd.read_csv(r"data\calculated_data\perfect_competition.csv", index_col="market_id")
     united_df = create_united_df(pc, monopoly)
-    # create_report_1(pc, monopoly)
+    create_report_1(pc, monopoly)
     create_report_2(united_df)
 
 

@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
-from app.initialisation import create_data_dirs
-
-RAW_DIR = create_data_dirs("raw")
+from app.initialisation import RAW_DIR
 
 def generate_market_parameters(count=1, seed=42):
     rng = np.random.default_rng(seed)

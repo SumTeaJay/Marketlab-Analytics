@@ -1,11 +1,7 @@
 import pandas as pd
 import numpy as np
 import csv
-from app.initialisation import create_data_dirs
-
-RAW_DIR = create_data_dirs("raw")
-AUDIT_DIR = create_data_dirs("audit")
-PROCESSED_DIR = create_data_dirs("processed")
+from app.initialisation import RAW_DIR, AUDIT_DIR, PROCESSED_DIR
 
 numeric_columns = ["demand_intercept", "demand_slope", "marginal_costs"]
 

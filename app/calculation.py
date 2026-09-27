@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
 from app.validation import check_monopoly_and_pc, validate_monopoly_and_pc
-from app.initialisation import create_data_dirs
-
-PROCESSED_DIR = create_data_dirs("processed")
-CALCULATED_DIR = create_data_dirs("calculated")
+from app.initialisation import PROCESSED_DIR, CALCULATED_DIR
 
 #pc - perfect competition
 

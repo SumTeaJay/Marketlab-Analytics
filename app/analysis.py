@@ -1,10 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from app.initialisation import create_data_dirs
-
-GRAPHS_DIR = create_data_dirs("graphs")
-REPORTS_DIR = create_data_dirs("reports")
-CALCULATED_DIR = create_data_dirs("calculated")
+from app.initialisation import GRAPHS_DIR, REPORTS_DIR, CALCULATED_DIR
 
 #pc - perfect competition
 

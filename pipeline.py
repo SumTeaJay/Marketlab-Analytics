@@ -1,7 +1,8 @@
 import pandas as pd
-from app import generate_markets, prepare_markets, calculate_monopoly_and_pc, analyze_markets
+from app import generate_markets, prepare_markets, calculate_monopoly_and_pc, analyze_markets, create_data_dirs
 
 def main():
+    create_data_dirs()
     generate_markets()
     prepare_markets()
     calculate_monopoly_and_pc()
